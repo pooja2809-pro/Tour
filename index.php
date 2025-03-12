@@ -1,153 +1,153 @@
-<?php
+
+    <?php
 session_start();
-error_reporting(0);
-include('includes/config.php');
+include("../db.php");
+
+include "sidenav.php";
+include "topheader.php";
 ?>
-<!DOCTYPE HTML>
-<html>
-<head>
-<title>TMS | Tourism Management System</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+      <!-- End Navbar -->
+      <div class="content">
+        <div class="container-fluid">
+         <div class="panel-body">
+		<a>
+            <?php  //success message
+            if(isset($_POST['success'])) {
+            $success = $_POST["success"];
+            echo "<h1 style='color:#0C0'>Your Product was added successfully &nbsp;&nbsp;  <span class='glyphicon glyphicon-ok'></h1></span>";
+            }
+            ?></a>
+                </div>
+                <div class="col-md-14">
+            <div class="card ">
+              <div class="card-header card-header-primary">
+                <h4 class="card-title"> Users List</h4>
+              </div>
+              <div class="card-body">
+                <div class="table-responsive ps">
+                  <table class="table table-hover tablesorter " id="">
+                    <thead class=" text-primary">
+                        <tr><th>ID</th><th>FirstName</th><th>LastName</th><th>Email</th><th>Password</th><th>Contact</th><th>Address</th><th>City</th>
+                    </tr></thead>
+                    <tbody>
+                      <?php 
+                        $result=mysqli_query($con,"select * from user_info")or die ("query 1 incorrect.....");
 
-<script type="applijewelleryion/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
-<link href="css/bootstrap.css" rel='stylesheet' type='text/css' />
-<link href="css/style.css" rel='stylesheet' type='text/css' />
-<link href='//fonts.googleapis.com/css?family=Open+Sans:400,700,600' rel='stylesheet' type='text/css'>
-<link href='//fonts.googleapis.com/css?family=Roboto+Condensed:400,700,300' rel='stylesheet' type='text/css'>
-<link href='//fonts.googleapis.com/css?family=Oswald' rel='stylesheet' type='text/css'>
-<link href="css/font-awesome.css" rel="stylesheet">
-<!-- Custom Theme files -->
-<script src="js/jquery-1.12.0.min.js"></script>
-<script src="js/bootstrap.min.js"></script>
-<!--animate-->
-<link href="css/animate.css" rel="stylesheet" type="text/css" media="all">
-<script src="js/wow.min.js"></script>
-	<script>
-		 new WOW().init();
-	</script>
-<!--//end-animate-->
+                        while(list($user_id,$first_name,$last_name,$email,$password,$phone,$address1,$address2)=mysqli_fetch_array($result))
+                        {	
+                        echo "<tr><td>$user_id</td><td>$first_name</td><td>$last_name</td><td>$email</td><td>$password</td><td>$phone</td><td>$address1</td><td>$address2</td>
 
-<style>
-.banner {
-    background-image:url('images/f1.jpg');
-    background-size: cover;
-    -webkit-background-size: cover;
-    -o-background-size: cover;
-    -ms-background-size: cover;
-    -moz-background-size: cover;
-    min-height: 560px;
-}
-</style>
+                        </tr>";
+                        }
+                        ?>
+                    </tbody>
+                  </table>
+                <div class="ps__rail-x" style="left: 0px; bottom: 0px;"><div class="ps__thumb-x" tabindex="0" style="left: 0px; width: 0px;"></div></div><div class="ps__rail-y" style="top: 0px; right: 0px;"><div class="ps__thumb-y" tabindex="0" style="top: 0px; height: 0px;"></div></div></div>
+              </div>
+            </div>
+          </div>
+           <div class="row">
+            <div class="col-md-6">
+            <div class="card ">
+              <div class="card-header card-header-primary">
+                <h4 class="card-title"> Categories List</h4>
+              </div>
+              <div class="card-body">
+                <div class="table-responsive ps">
+                  <table class="table table-hover tablesorter " id="">
+                    <thead class=" text-primary">
+                        <tr><th>ID</th><th>Categories</th><th>Count</th>
+                    </tr></thead>
+                    <tbody>
+                      <?php 
+                        $result=mysqli_query($con,"select * from categories")or die ("query 1 incorrect.....");
+                        $i=1;
+                        while(list($cat_id,$cat_title)=mysqli_fetch_array($result))
+                        {	
+                            $sql = "SELECT COUNT(*) AS count_items FROM products WHERE product_cat=$i";
+                            $query = mysqli_query($con,$sql);
+                            $row = mysqli_fetch_array($query);
+                            $count=$row["count_items"];
+                            $i++;
+                        echo "<tr><td>$cat_id</td><td>$cat_title</td><td>$count</td>
 
-</head>
-<body>
-<?php include('includes/header.php');?>
-<div class="banner">
-	<div class="container">
-		<h1 class="wow zoomIn animated animated" data-wow-delay=".5s" style="visibility: visible; animation-delay: 0.5s; animation-name: zoomIn;" style="color:#000 !important"> <br>ADVENTURE IS WORTHWHILE</h1> 
-	    <h2 class="wow zoomIn animated animated" data-wow-delay=".5s" style="visibility: visible; animation-delay: 0.5s; animation-name: zoomIn;" style="color:#000 !important"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Discover New Places With Us</h1> 
-	</div>
-</div>
+                        </tr>";
+                        }
+                        ?>
+                    </tbody>
+                  </table>
+                <div class="ps__rail-x" style="left: 0px; bottom: 0px;"><div class="ps__thumb-x" tabindex="0" style="left: 0px; width: 0px;"></div></div><div class="ps__rail-y" style="top: 0px; right: 0px;"><div class="ps__thumb-y" tabindex="0" style="top: 0px; height: 0px;"></div></div></div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="card ">
+              <div class="card-header card-header-primary">
+                <h4 class="card-title">Brands List</h4>
+              </div>
+              <div class="card-body">
+                <div class="table-responsive ps">
+                  <table class="table table-hover tablesorter " id="">
+                    <thead class=" text-primary">
+                        <tr><th>ID</th><th>Brands</th><th>Count</th>
+                    </tr></thead>
+                    <tbody>
+                      <?php 
+                        $result=mysqli_query($con,"select * from brands")or die ("query 1 incorrect.....");
+                        $i=1;
+                        while(list($brand_id,$brand_title)=mysqli_fetch_array($result))
+                        {	
+                            
+                            $sql = "SELECT COUNT(*) AS count_items FROM products WHERE product_brand=$i";
+                            $query = mysqli_query($con,$sql);
+                            $row = mysqli_fetch_array($query);
+                            $count=$row["count_items"];
+                            $i++;
+                        echo "<tr><td>$brand_id</td><td>$brand_title</td><td>$count</td>
 
+                        </tr>";
+                        }
+                        ?>
+                    </tbody>
+                  </table>
+                <div class="ps__rail-x" style="left: 0px; bottom: 0px;"><div class="ps__thumb-x" tabindex="0" style="left: 0px; width: 0px;"></div></div><div class="ps__rail-y" style="top: 0px; right: 0px;"><div class="ps__thumb-y" tabindex="0" style="top: 0px; height: 0px;"></div></div></div>
+              </div>
+            </div>
+          </div>
+           </div>
+           <div class="col-md-5">
+            <div class="card ">
+              <div class="card-header card-header-primary">
+                <h4 class="card-title">Subscribers</h4>
+              </div>
+              <div class="card-body">
+                <div class="table-responsive ps">
+                  <table class="table table-hover tablesorter " id="">
+                    <thead class=" text-primary">
+                        <tr><th>ID</th><th>email</th>
+                    </tr></thead>
+                    <tbody>
+                      <?php 
+                        $result=mysqli_query($con,"select * from email_info")or die ("query 1 incorrect.....");
 
+                        while(list($brand_id,$brand_title)=mysqli_fetch_array($result))
+                        {	
+                        echo "<tr><td>$brand_id</td><td>$brand_title</td>
 
-
-
-
-<!---holiday---->
-<div class="container">
-	<div class="holiday">
-	
-
-
-
-	
-	<h3>Package List</h3>
-
-					
-<?php $sql = "SELECT * from tbltourpackages order by rand() limit 4";
-$query = $dbh->prepare($sql);
-$query->execute();
-$results=$query->fetchAll(PDO::FETCH_OBJ);
-$cnt=1;
-if($query->rowCount() > 0)
-{
-foreach($results as $result)
-{	?>
-			<div class="rom-btm">
-				<div class="col-md-3 room-left wow fadeInLeft animated" data-wow-delay=".5s">
-					<img src="admin/pacakgeimages/<?php echo htmlentities($result->PackageImage);?>" class="img-responsive" alt="">
-				</div>
-				<div class="col-md-6 room-midle wow fadeInUp animated" data-wow-delay=".5s">
-					<h4>Package Name: <?php echo htmlentities($result->PackageName);?></h4>
-					<h6>Package Type : <?php echo htmlentities($result->PackageType);?></h6>
-					<p><b>Package Location :</b> <?php echo htmlentities($result->PackageLocation);?></p>
-					<p><b>Features</b> <?php echo htmlentities($result->PackageFetures);?></p>
-				</div>
-				<div class="col-md-3 room-right wow fadeInRight animated" data-wow-delay=".5s">
-					<h5>Rs <?php echo htmlentities($result->PackagePrice);?></h5>
-					<a href="package-details.php?pkgid=<?php echo htmlentities($result->PackageId);?>" class="view">Details</a>
-				</div>
-				<div class="clearfix"></div>
-			</div>
-
-<?php }} ?>
-			
-		
-<div><a href="package-list.php" class="view">View More Packages</a></div>
-</div>
-			<div class="clearfix"></div>
-	</div>
-
-
-
-<!--- routes ---->
-<div class="routes">
-	<div class="container">
-		<div class="col-md-4 routes-left wow fadeInRight animated" data-wow-delay=".5s">
-			<div class="rou-left">
-			<!--	<a href="#"><i class="glyphicon glyphicon-list-alt"></i></a>
-			</div>
-			<div class="rou-rgt wow fadeInDown animated" data-wow-delay=".5s">
-				<!--<h3>80000</h3>
-				<p>Enquiries</p>-->
-			</div>
-				<div class="clearfix"></div>
-		</div>
-		<div class="col-md-4 routes-left">
-			<div class="rou-left">
-				<!--<a href="#"><i class="fa fa-user"></i></a>
-			</div>
-			<div class="rou-rgt">
-				<!--<h3>1900</h3>
-				<p>Registered users</p>-->
-			</div>
-				<div class="clearfix"></div>
-		</div>
-		<!--<div class="col-md-4 routes-left wow fadeInRight animated" data-wow-delay=".5s">
-			<!--<div class="rou-left">
-				<a href="#"><i class="fa fa-ticket"></i></a>
-			</div>
-			<div class="rou-rgt">
-				<!--<h3>7,00,00,000+</h3>
-				<p>Booking</p>-->
-			</div>
-				<div class="clearfix"></div>
-		</div>
-		<div class="clearfix"></div>
-	</div>
-</div>
-
-<?php include('includes/footer.php');?>
-<!-- signup -->
-<?php include('includes/signup.php');?>			
-<!-- //signu -->
-<!-- signin -->
-<?php include('includes/signin.php');?>			
-<!-- //signin -->
-<!-- write us -->
-<?php include('includes/write-us.php');?>			
-<!-- //write us -->
-</body>
-</html>
+                        </tr>";
+                        }
+                        ?>
+                    </tbody>
+                  </table>
+                <div class="ps__rail-x" style="left: 0px; bottom: 0px;"><div class="ps__thumb-x" tabindex="0" style="left: 0px; width: 0px;"></div></div><div class="ps__rail-y" style="top: 0px; right: 0px;"><div class="ps__thumb-y" tabindex="0" style="top: 0px; height: 0px;"></div></div></div>
+              </div>
+            </div>
+          </div>
+           
+            
+          
+        </div>
+      </div>
+      <?php
+include "footer.php";
+?>
